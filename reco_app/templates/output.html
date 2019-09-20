@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+   <title>Recommendation System</title>
+   <body>
+      <h2>Recommendations for:</h2>
+      <table border = 1>
+            <tr>
+               <th> User: </th>
+               {% if user_id %}
+               <td> {{ user_id }} </td>
+               {% else %}
+               <td> unknown </td>
+               {% endif %}
+            </tr>
+            <tr>
+               <th> Context: </th>
+               <td> {{ result["ctx"] }} </td>
+            </tr>
+            <tr>
+               <th> Value: </th>
+               <td> {{ result["cat"] }}</td>
+            </tr>
+      </table>
+      
+      <p>Recommended tracks:</p>
+      
+      <table border = 1>
+          {% for x in tracks %}
+             <tr>
+                 <td> {{ x[0] }} - {{ x[1] }} </td>
+             </tr>
+          {% endfor %}
+      </table>
+      
+      <br/>
+      <a href="{{ url_for('index') }}">Go Back</a>
+   </body>
+</html>

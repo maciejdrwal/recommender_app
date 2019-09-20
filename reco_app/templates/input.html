@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+   <title>Recommendation System</title>
+   <head>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   </head>
+   <body>
+      <form action = "{{ url_for('result') }}" method = "POST">
+         <h2>Please provide input:</h2>
+         <p>User ID <input type = "text" name = "UserID" /></p>
+         <p>Context Category:</p>
+         <select name="ctx" id="options">
+             <option value="" disabled selected>Select category</option>
+             {% for x in categories %}
+                 <option value="{{ x }}">{{ x }}</option>
+             {% endfor %}
+         </select>
+         
+         <select name="cat" id="choices">
+             <option value="" disabled selected>Please select value</option>
+         </select>
+         <p><input type="submit" id="btnsubmit" value="Get Recommendations!" disabled selected /></p>
+         <br/><br/>
+         <p><a href="{{ url_for('metrics') }}">See model's quality metrics</a></p>
+      </form>
+      <script>
+          var lookup = { 
+              'DrivingStyle': ['relaxed driving', 'sport driving'], 
+              'landscape': ['urban', 'mountains', 'country side', 'coast line'], 
+              'mood': ['sad', 'lazy', 'active', 'happy'], 
+              'naturalphenomena': ['night', 'morning', 'day time', 'afternoon'], 
+              'RoadType': ['city', 'serpentine', 'highway'], 
+              'sleepiness': ['sleepy', 'awake'], 
+              'trafficConditions': ['traffic jam', 'lots of cars', 'free road'], 
+              'weather': ['sunny', 'snowing', 'rainy', 'cloudy']
+          };
+          $("#options").on("change", function() {
+              var selectedValue = $(this).val();
+              $("#choices").empty();              
+              for (i = 0; i < lookup[selectedValue].length; i++) {
+                  $("#choices").append("<option value='" + lookup[selectedValue][i] + "'>" + lookup[selectedValue][i] + "</option");
+              }
+              $("#btnsubmit").attr("disabled", false);
+          });
+      </script>
+   </body>
+</html>
